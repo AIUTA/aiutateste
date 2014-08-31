@@ -1,2 +1,0 @@
-MyApp
-Jinja2==2.6
