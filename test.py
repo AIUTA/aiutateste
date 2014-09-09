@@ -1,75 +1,100 @@
 import cgi
-import datetime
+import urllib
+import os
+
+from google.appengine.api import users
+from google.appengine.ext import ndb
+
+import jinja2
 import webapp2
 
-from google.appengine.ext import ndb
-from google.appengine.api import users
+MAIN_PAGE_FOOTER_TEMPLATE = """\
+    <form action="/sign?%s" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+    <hr>
+    <form>Guestbook name:
+      <input value="%s" name="guestbook_name">
+      <input type="submit" value="switch">
+    </form>
+    <a href="%s">%s</a>
+  </body>
+</html>
+"""
 
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
+    
+DEFAULT_GUESTBOOK_NAME = 'default_guestbook'
 
+# We set a parent key on the 'Greetings' to ensure that they are all in the same
+# entity group. Queries across the single entity group will be consistent.
+# However, the write rate should be limited to ~1/second.
 
-guestbook_key = ndb.Key('Guestbook', 'default_guestbook')
+def guestbook_key(guestbook_name=DEFAULT_GUESTBOOK_NAME):
+    """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
+    return ndb.Key('Guestbook', guestbook_name)
 
 class Greeting(ndb.Model):
+  """Models an individual Guestbook entry."""
   author = ndb.UserProperty()
-  content = ndb.TextProperty()
+  content = ndb.StringProperty(indexed=False)
   date = ndb.DateTimeProperty(auto_now_add=True)
-
+jose = "oi"
 class MainPage(webapp2.RequestHandler):
-  def get(self):
-    self.response.headers['Content-Type'] = 'text/html'
-    self.response.out.write("""
 
-<html>
+    def get(self):
+        guestbook_name = self.request.get('guestbook_name',
+                                          DEFAULT_GUESTBOOK_NAME)
+        greetings_query = Greeting.query(
+            ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
+        greetings = greetings_query.fetch(10)
 
-<head>
+        if users.get_current_user():
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = 'Logout'
+        else:
+            url = users.create_login_url(self.request.uri)
+            url_linktext = 'Login'
 
-<link type="text/css" rel="stylesheet" href="/css/style.css"/>
+				
+				
+        template_values = {
+        		'jose': jose,
+            'greetings': greetings,
+            'guestbook_name': urllib.quote_plus(guestbook_name),
+            'url': url,
+            'url_linktext': url_linktext,
+        }
 
-</head>
-
-<body>""")
-
-    
-    greetings = ndb.gql('SELECT * '
-                        'FROM Greeting '
-                        'WHERE ANCESTOR IS :1 '
-                        'ORDER BY date DESC LIMIT 10',
-                        guestbook_key)
-
-    for greeting in greetings:
-      if greeting.author:
-        self.response.out.write('<b>%s</b> wrote:' % greeting.author.nickname())
-      else:
-        self.response.out.write('An anonymous person wrote:')
-      self.response.out.write('<blockquote>%s</blockquote>' %
-                              cgi.escape(greeting.content))
-
-    self.response.out.write(' <b>%s</b>' %self.request)
-    self.response.out.write("""
-          <form action="/sign" method="post">
-            <div><textarea name="content" rows="3" cols="60"></textarea></div>
-            <div><input type="submit" value="Sign Guestbook"></div>
-          </form>
-
-          <p>oi</p>
-        </body>
-      </html>""")
-
-
+        template = JINJA_ENVIRONMENT.get_template('/templates/index.html')
+        self.response.write(template.render(template_values))
+        
+        
 class Guestbook(webapp2.RequestHandler):
-  def post(self):
-    greeting = Greeting(parent=guestbook_key)
+    def post(self):
+        # We set the same parent key on the 'Greeting' to ensure each Greeting
+        # is in the same entity group. Queries across the single entity group
+        # will be consistent. However, the write rate to a single entity group
+        # should be limited to ~1/second.
+        guestbook_name = self.request.get('guestbook_name',
+                                          DEFAULT_GUESTBOOK_NAME)
+        greeting = Greeting(parent=guestbook_key(guestbook_name))
 
-    if users.get_current_user():
-      greeting.author = users.get_current_user()
+        if users.get_current_user():
+            greeting.author = users.get_current_user()
 
-    greeting.content = self.request.get('content')
-    greeting.put()
-    self.redirect('/')
+        greeting.content = self.request.get('content')
+        greeting.put()
 
-
+        query_params = {'guestbook_name': guestbook_name}
+        self.redirect('/?' + urllib.urlencode(query_params))
+        
+        
 app = webapp2.WSGIApplication([
-  ('/', MainPage),
-  ('/sign', Guestbook)
+    ('/', MainPage),
+    ('/sign', Guestbook)
 ], debug=True)
-

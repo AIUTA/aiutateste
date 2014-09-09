@@ -1,3 +1,57 @@
 body {
-    background-color: #d0e4fe;
+	margin:0;
+	padding:0;
+	border:0;
+	font:inherit;
+	font-size:100%;
+	background-color:rgba(215, 190, 121, 0.7);
+	font-family: 'Gafata', sans-serif;
+}
+.bg{
+	height:730px;
+	background-image: linear-gradient(to top right, rgba(0,0,0,0.7), rgba(0,0,0,0.2)),url("/img/bg.jpg");
+	background-repeat:no-repeat, no-repeat;
+	background-position:50% 50%, 50% 50%;
+	background-size:cover, cover;
+	background-attachment:fixed,fixed;
+}
+
+.title{
+	font-family: 'Cinzel', sans-serif;
+	font-size:650%;
+	font-weight:bold;
+	color: rgb(255,255,255);
+	padding: 40px;
+	position:relative;
+	top:100px;
+	background-color:rgba(0,0,0,0.75)
+}
+
+.about{
+	height:730px;
+	background:rgb(242,230,196) no-repeat center center;
+	text-align:center;
+	overflow:hidden
+}
+
+.title2{
+	font-family: 'Cinzel', sans-serif;
+	font-size:400%;
+	font-weight:bold;
+	color: rgb(255,255,255);
+	padding: 40px;
+	position:relative;
+	top:0px;
+	background-color:rgba(0,0,0,0.75)
+}
+
+.textabout{
+	font-family: 'Anaheim', sans-serif;
+	font-size:100%;
+	font-weight:bold;
+	color: rgb(143,108,0);
+	padding: 40px;
+	position:relative;
+	text-align:left;
+	top:0px;
 }

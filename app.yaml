@@ -1,14 +1,16 @@
 application: aiutateste
-version: 1
+version: 0-0-1
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
-- url: /.*
-  script: test.app  
+- url: /
+  script: test.app
 - url: /css
   static_dir: css
+- url: /img
+  static_dir: img
   
 libraries:
 - name: webapp2
