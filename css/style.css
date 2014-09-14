@@ -9,7 +9,7 @@ body {
 }
 .bg{
 	height:730px;
-	background-image: linear-gradient(to top right, rgba(0,0,0,0.7), rgba(0,0,0,0.2)),url("/img/bg.jpg");
+	background-image: linear-gradient(to top right, rgba(0,0,0,0.7), rgba(0,0,0,0.2)),url("../img/bg.jpg");
 	background-repeat:no-repeat, no-repeat;
 	background-position:50% 50%, 50% 50%;
 	background-size:cover, cover;
