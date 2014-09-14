@@ -10,46 +10,81 @@ html, body {
 	font-family: 'Gafata', sans-serif;
 }
 
-.animated { 
-    -webkit-animation-duration: 5s; 
-    animation-duration: 5s; 
-    -webkit-animation-fill-mode:both; 
-    animation-fill-mode: both; 
-    -webkit-animation-timing-function: ease-in-out; 
-    animation-timing-function: ease-in-out; 
+.animated {
+	-webkit-animation-duration: 4s; 
+	animation-duration: 4s; 
+	-webkit-animation-fill-mode:both;
+	animation-fill-mode: both;
+	-webkit-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out; 
 } 
-
+.animated2 {
+	-webkit-animation-duration: 6s; 
+	animation-duration: 6s; 
+	-webkit-animation-fill-mode:both;
+	animation-fill-mode: both;
+	-webkit-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out; 
+} 
 @-webkit-keyframes bounceInDown { 
-   0%{
-       	opacity: 0; 
-		-webkit-transform: translateY(200px);          
-    } 
-    50%{
-    	opacity:0.3;
-        -webkit-transform: translateY(0px); 
-    } 
-    100%{
-    	opacity: 1;  
-    } 
+	0%{
+		opacity: 0;
+		-webkit-transform: translateY(100px);
+	}
+	50%{
+		opacity:0.3;
+		-webkit-transform: translateY(0px);
+	}
+	100%{
+		opacity: 1;
+	} 
 } 
 
-@keyframes bounceInDown { 
-    0%{
-        opacity: 0; 
-        transform: translateY(200px);  
-    }
-    50%{
-    	opacity:0.3;
-        transform: translateY(0px); 
-    } 
-    100%{
-    	opacity: 1;
-    } 	
+@keyframes bounceInDown {
+	0%{
+		opacity: 0;
+		transform: translateY(100px);
+	}
+	50%{
+		opacity:0.3;
+		transform: translateY(0px);
+	}
+	100%{
+		opacity: 1;
+	} 	
+}  
+
+@-webkit-keyframes socialbuttons{ 
+	0%{
+		opacity: 0;
+	
+	}
+	50%{
+		opacity:0;
+	
+	}
+	100%{
+		opacity: 1;
+	} 
+} 
+
+@keyframes socialbuttons{
+	0%{
+		opacity: 0;
+		
+	}
+	50%{
+		opacity:0;
+	
+	}
+	100%{
+		opacity: 1;
+	} 	
 } 
 
 .home{
 	-webkit-animation-name: bounceInDown; 
-    animation-name: bounceInDown; 
+	animation-name: bounceInDown; 
 	height:90%;
 	background-image: url("../img/logo/logo.jpg");
 	background-repeat:no-repeat;
@@ -65,6 +100,7 @@ html, body {
 	width:100%;
 	height:7px;
 }
+
 .homelineb{
 	position:fixed;
 	background:rgba(0,0,0,1) no-repeat;
@@ -73,9 +109,10 @@ html, body {
 	bottom:0px;
 }
 .fb-like{
+	-webkit-animation-name:socialbuttons; 
+	animation-name:socialbuttons;
 	float:right;
 	margin-right:10%;
-	
 }
 .bg{
 	height:730px;
