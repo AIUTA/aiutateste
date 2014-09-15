@@ -54,7 +54,7 @@ html, body {
 	} 	
 }  
 
-@-webkit-keyframes socialbuttons{ 
+@-webkit-keyframes footer{ 
 	0%{
 		opacity: 0;
 	
@@ -68,7 +68,7 @@ html, body {
 	} 
 } 
 
-@keyframes socialbuttons{
+@keyframes footer{
 	0%{
 		opacity: 0;
 		
@@ -85,10 +85,10 @@ html, body {
 .home{
 	-webkit-animation-name: bounceInDown; 
 	animation-name: bounceInDown; 
-	height:90%;
-	background-image: url("../img/logo/logo.jpg");
+	height:75%;
+	background-image: url("../img/logo/logoaiutahome.jpg");
 	background-repeat:no-repeat;
-	background-position:50% 50%;
+	background-position:50% 35%;
 	background-size:auto;
 	background-attachment:fixed;
 	position:relative;
@@ -98,21 +98,23 @@ html, body {
 	position:fixed;
 	background:rgba(0,0,0,1) no-repeat;
 	width:100%;
-	height:7px;
+	height:9px;
 }
 
 .homelineb{
 	position:fixed;
 	background:rgba(0,0,0,1) no-repeat;
 	width:100%;
-	height:7px;
+	height:9px;
 	bottom:0px;
 }
 .fb-like{
-	-webkit-animation-name:socialbuttons; 
-	animation-name:socialbuttons;
+	-webkit-animation-name:footer; 
+	animation-name:footer;
+	display:inline;
 	float:right;
-	margin-right:10%;
+	margin-right:7%;
+	margin-top:4%;
 }
 .bg{
 	height:730px;
@@ -151,13 +153,23 @@ html, body {
 	background-color:rgba(0,0,0,0.75)
 }
 
-.textabout{
+#address1{
+	-webkit-animation-name:footer; 
+	animation-name:footer;
 	font-family: 'Anaheim', sans-serif;
 	font-size:100%;
 	font-weight:bold;
-	color: rgb(143,108,0);
-	padding: 40px;
-	position:relative;
+	position:absolute;
 	text-align:left;
-	top:0px;
+	margin-left:5%;
+	margin-top:2%;
+	width:27%;
+}
+
+#apoio{
+	-webkit-animation-name: footer; 
+	animation-name: footer;
+	margin-left:38%;
+	margin-top:1%;
+  position:absolute;
 }
